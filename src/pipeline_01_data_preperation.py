@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import pathlib
 
 import pandas as pd
 import yaml
@@ -11,10 +12,11 @@ def read_dataset(main_dir, file_paths):
     dfs = []
     # read each dataframe 
     for i_file in file_paths:
-        full_path = os.path.join(main_dir, i_file)
-        #read the csv
-        df = pd.read_csv(full_path, delimiter=",")
-        dfs.append(df)
+        if(i_file.endswith(".csv")):
+            full_path = os.path.join(main_dir, i_file)
+            #read the csv
+            df = pd.read_csv(full_path, delimiter=",", index_col=0)
+            dfs.append(df)
 
     # concat all the dataframes into one
     final_df = pd.concat(dfs, axis=0)
@@ -43,6 +45,16 @@ def main(config_path, stage):
                       )
     #print some stasts
     print("Dataset Stats n.rows : {} n.columns : {}".format(df.shape[0],df.shape[1]))
+
+    #step5. save the dataset into raw folder
+    base_save_dir = config_meta["data_preprocessing"][stage]
+    pathlib.Path(base_save_dir).mkdir(parents=True, exist_ok=True) 
+
+    df.to_csv(os.path.join(base_save_dir, config_meta["data_preprocessing"][f"{stage}_filepath"] ),
+              index=True,
+              sep=",",
+              )
+
     return df
 
 if __name__=='__main__':

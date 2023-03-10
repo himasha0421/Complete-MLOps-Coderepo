@@ -34,9 +34,12 @@ saved_models:
   model_dir: models
 
 data_preprocessing:
-  preprocessed_data_dir: data/preprocessed_data
+  train: data/processed/preprocessed_data_train
+  train_filepath: preprocessed_train.csv
   null_values_csv: null_values.csv
-  preprocessed_data_dir_pred: data/preprocessed_data_pred
+  pred: data/processed/preprocessed_data_pred
+  pred_filepath: preprocessed_pred.csv
+
 
   KNNImputer: 
     n_neighbors: 3 

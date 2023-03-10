@@ -1,0 +1,17 @@
+schema: '2.0'
+stages:
+  train_load_data:
+    cmd: python3 src/pipeline_01_data_preperation.py --config=config/params.yaml --stage=train
+    deps:
+    - path: data/raw/wafer-dataset-main/Training_Batch_Files/
+      md5: ef3e121efa7b8003ef31701f4962386a.dir
+      size: 13630100
+      nfiles: 83
+    - path: src/pipeline_01_data_preperation.py
+      md5: bd84fd785a0010550bd0d87f6bfa4709
+      size: 2020
+    outs:
+    - path: data/processed/preprocessed_data_train
+      md5: c06ccd125b26cc69d07c6d2ed500742d.dir
+      size: 14635451
+      nfiles: 1
