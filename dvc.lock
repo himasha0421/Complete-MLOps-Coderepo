@@ -3,18 +3,13 @@ stages:
   train_load_data:
     cmd: python3 src/pipeline_01_data_preperation.py --config=config/params.yaml --stage=train
     deps:
-    - path: data/raw/wafer-dataset-main/Training_Batch_Files/
-      md5: ef3e121efa7b8003ef31701f4962386a.dir
-      size: 13630100
-      nfiles: 83
     - path: src/pipeline_01_data_preperation.py
-      md5: bd84fd785a0010550bd0d87f6bfa4709
-      size: 2020
+      md5: a3696ca9fe375a9c1ea08fca5cef87f2
+      size: 2037
     outs:
-    - path: data/processed/preprocessed_data_train
-      md5: c06ccd125b26cc69d07c6d2ed500742d.dir
+    - path: data/processed/preprocessed_data_train/preprocessed_train.csv
+      md5: 7c5bd902981fd0e33e427c720cdc0a74
       size: 14635451
-      nfiles: 1
   split_data:
     cmd: python src/pipeline_02_data_split.py --config=config/params.yaml
     deps:
@@ -22,8 +17,8 @@ stages:
       md5: 7c5bd902981fd0e33e427c720cdc0a74
       size: 14635451
     - path: src/pipeline_01_data_preperation.py
-      md5: bd84fd785a0010550bd0d87f6bfa4709
-      size: 2020
+      md5: a3696ca9fe375a9c1ea08fca5cef87f2
+      size: 2037
     outs:
     - path: data/processed/preprocessed_data_split/preprocessed_dev.csv
       md5: 46892ba529850eb5afba544aa5c2ec9f

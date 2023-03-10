@@ -49,7 +49,7 @@ def main(config_path, stage):
     #step5. save the dataset into raw folder
     base_save_dir = config_meta["data_preprocessing"][stage]
     pathlib.Path(base_save_dir).mkdir(parents=True, exist_ok=True) 
-
+    # save to csv
     df.to_csv(os.path.join(base_save_dir, config_meta["data_preprocessing"][f"{stage}_filepath"] ),
               index=True,
               sep=",",

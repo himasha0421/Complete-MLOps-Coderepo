@@ -3,9 +3,8 @@ stages:
     cmd: python3 src/pipeline_01_data_preperation.py --config=config/params.yaml --stage=train
     deps:
     - src/pipeline_01_data_preperation.py
-    - data/raw/wafer-dataset-main/Training_Batch_Files/
     outs:
-    - data/processed/preprocessed_data_train
+    - data/processed/preprocessed_data_train/preprocessed_train.csv
   
   split_data:
     cmd: python src/pipeline_02_data_split.py --config=config/params.yaml
