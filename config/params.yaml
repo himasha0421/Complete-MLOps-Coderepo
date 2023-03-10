@@ -4,7 +4,8 @@ base:
   target_col: Output
 
 data_source:
-  batch_files: Training_Batch_Files
+  train: data/raw/wafer-dataset-main/Training_Batch_Files
+  pred : data/raw/wafer-dataset-main/Prediction_Batch_Files
 
 
 data_preparation:
@@ -35,9 +36,7 @@ saved_models:
 data_preprocessing:
   preprocessed_data_dir: data/preprocessed_data
   null_values_csv: null_values.csv
-
   preprocessed_data_dir_pred: data/preprocessed_data_pred
-
 
   KNNImputer: 
     n_neighbors: 3 
@@ -53,8 +52,8 @@ data_preprocessing:
     
 
 artifacts_dir: 
-  general: general
-  mlflow: mlflow_artifacts
+  general: models
+  mlflow: models/mlflow_artifacts
 
 
 training:
@@ -95,3 +94,7 @@ training:
         - 50
         - 100
         - 200
+
+reports:
+  params: report/params.json
+  scores: report/scores.json
