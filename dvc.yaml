@@ -6,3 +6,12 @@ stages:
     - data/raw/wafer-dataset-main/Training_Batch_Files/
     outs:
     - data/processed/preprocessed_data_train
+  
+  split_data:
+    cmd: python src/pipeline_02_data_split.py --config=config/params.yaml
+    deps:
+    - src/pipeline_01_data_preperation.py
+    - data/processed/preprocessed_data_train/preprocessed_train.csv
+    outs:
+    - data/processed/preprocessed_data_split/preprocessed_train.csv
+    - data/processed/preprocessed_data_split/preprocessed_dev.csv

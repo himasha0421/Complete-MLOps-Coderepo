@@ -15,3 +15,19 @@ stages:
       md5: c06ccd125b26cc69d07c6d2ed500742d.dir
       size: 14635451
       nfiles: 1
+  split_data:
+    cmd: python src/pipeline_02_data_split.py --config=config/params.yaml
+    deps:
+    - path: data/processed/preprocessed_data_train/preprocessed_train.csv
+      md5: 7c5bd902981fd0e33e427c720cdc0a74
+      size: 14635451
+    - path: src/pipeline_01_data_preperation.py
+      md5: bd84fd785a0010550bd0d87f6bfa4709
+      size: 2020
+    outs:
+    - path: data/processed/preprocessed_data_split/preprocessed_dev.csv
+      md5: 46892ba529850eb5afba544aa5c2ec9f
+      size: 2929741
+    - path: data/processed/preprocessed_data_split/preprocessed_train.csv
+      md5: 18d943f1a529adcc356751af758b2be4
+      size: 11712583

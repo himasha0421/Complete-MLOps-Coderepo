@@ -7,7 +7,6 @@ data_source:
   train: data/raw/wafer-dataset-main/Training_Batch_Files
   pred : data/raw/wafer-dataset-main/Prediction_Batch_Files
 
-
 data_preparation:
   training_db: Training.db
   training_db_dir: Training_Database
@@ -53,6 +52,11 @@ data_preprocessing:
       curve: convex
       direction: decreasing
     
+split_data:
+  base_path: data/processed/preprocessed_data_split
+  train_path: preprocessed_train.csv
+  dev_path: preprocessed_dev.csv
+  test_size: 0.2
 
 artifacts_dir: 
   general: models
