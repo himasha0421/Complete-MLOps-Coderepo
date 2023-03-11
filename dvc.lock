@@ -4,25 +4,48 @@ stages:
     cmd: python3 src/pipeline_01_data_preperation.py --config=config/params.yaml --stage=train
     deps:
     - path: src/pipeline_01_data_preperation.py
-      md5: a3696ca9fe375a9c1ea08fca5cef87f2
-      size: 2037
+      md5: a243a18ef1b28e4c104ded3ad8a1932a
+      size: 2191
+    - path: src/utils.py
+      md5: 4d63a59f06e512acddc9c09dbf45449d
+      size: 276
     outs:
-    - path: data/processed/preprocessed_data_train/preprocessed_train.csv
-      md5: 7c5bd902981fd0e33e427c720cdc0a74
-      size: 14635451
+    - path: data/raw/collate-dataset/train_raw_wafer.csv
+      md5: 41113f3bf2fd134c1e7fbffe4731adab
+      size: 5618555
   split_data:
-    cmd: python src/pipeline_02_data_split.py --config=config/params.yaml
+    cmd: python src/pipeline_03_data_split.py --config=config/params.yaml
     deps:
-    - path: data/processed/preprocessed_data_train/preprocessed_train.csv
-      md5: 7c5bd902981fd0e33e427c720cdc0a74
-      size: 14635451
-    - path: src/pipeline_01_data_preperation.py
-      md5: a3696ca9fe375a9c1ea08fca5cef87f2
-      size: 2037
+    - path: data/processed/preprocessed_data_train/train_preprocessed_wafer.csv
+      md5: 41113f3bf2fd134c1e7fbffe4731adab
+      size: 5618555
+    - path: src/pipeline_03_data_split.py
+      md5: b38dbc832672ec8a259c412c0f339da3
+      size: 1585
+    - path: src/utils.py
+      md5: 4d63a59f06e512acddc9c09dbf45449d
+      size: 276
     outs:
-    - path: data/processed/preprocessed_data_split/preprocessed_dev.csv
-      md5: 46892ba529850eb5afba544aa5c2ec9f
-      size: 2929741
-    - path: data/processed/preprocessed_data_split/preprocessed_train.csv
-      md5: 18d943f1a529adcc356751af758b2be4
-      size: 11712583
+    - path: data/processed/preprocessed_data_train_split/preprocessed_dev_wafer.csv
+      md5: 686f605ad86024c0030d3166d961d214
+      size: 1128999
+    - path: data/processed/preprocessed_data_train_split/preprocessed_train_wafer.csv
+      md5: eb0e7c173942462400e69aac6c7b2c0d
+      size: 4495948
+  train_preprocess:
+    cmd: python3 src/pipeline_02_data_preprocessing.py --config=config/params.yaml
+      --stage=train
+    deps:
+    - path: data/raw/collate-dataset/train_raw_wafer.csv
+      md5: 41113f3bf2fd134c1e7fbffe4731adab
+      size: 5618555
+    - path: src/pipeline_02_data_preprocessing.py
+      md5: 773e18367c513eb43e3facdbf0a6a5cf
+      size: 1288
+    - path: src/utils.py
+      md5: 4d63a59f06e512acddc9c09dbf45449d
+      size: 276
+    outs:
+    - path: data/processed/preprocessed_data_train/train_preprocessed_wafer.csv
+      md5: 41113f3bf2fd134c1e7fbffe4731adab
+      size: 5618555

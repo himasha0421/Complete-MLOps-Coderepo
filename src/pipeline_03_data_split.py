@@ -7,10 +7,11 @@ import pathlib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from pipeline_01_data_preperation import read_params
+from utils import read_params
 
 
 def split_and_saved_data(config_path):
+    """split the entire traning set for train and dev with split size"""
     # load the config meta
     config = read_params(config_path)
     base_save_dir = config["split_data"]["base_path"] 
@@ -18,7 +19,7 @@ def split_and_saved_data(config_path):
     train_data_path = config["split_data"]["train_path"]
 
     # load the raw preprocessed dataset
-    base_dir , file_path =  config["data_preprocessing"]["train"] , config["data_preprocessing"]["train_filepath"]
+    base_dir , file_path =  config["data_preprocessing"]["train"]["base_dir"] , config["data_preprocessing"]["train"]["filepath"]
     split_ratio = config["split_data"]["test_size"]
     random_state = config["base"]["random_state"]
 
