@@ -61,7 +61,7 @@ def main(config_path, stage):
 if __name__=='__main__':
     args =  argparse.ArgumentParser()
     # add arguments
-    args.add_argument("--config", default='config/params.yaml')
+    args.add_argument("--config", default='params.yaml')
     args.add_argument("--stage", default="train")
     parsed_args =  args.parse_args()
 

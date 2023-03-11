@@ -1,7 +1,7 @@
 base:
   project: Wafer-Quality-Project
   random_state: 42
-  target_col: Output
+  target_col: Good/Bad
 
 data_source:
   base_path: data/raw/collate-dataset
@@ -19,7 +19,6 @@ data_preprocessing:
   pred: 
     base_dir:  data/processed/preprocessed_data_pred
     filepath: pred_preprocessed_wafer.csv
-
 
   KNNImputer: 
     n_neighbors: 3 
@@ -45,47 +44,53 @@ artifacts_dir:
 
 
 training:
-  random_forest:
-    cv: 5
-    verbose: 3
-    param_grid:
-      n_estimators: 
-        - 10
-        - 50
-        - 100
-        - 130 
-      criterion: 
-        - gini
-        - entropy
-      max_depth: 
-        - 2
-        - 4
-      max_features: 
-        - auto
-        - log2
-  xg_boost:
-    cv: 5
-    verbose: 3
-    param_grid:
-      learning_rate: 
-        - 0.5
-        - 0.1
-        - 0.01
-        - 0.001
-      max_depth: 
-        - 3
-        - 5
-        - 10
-        - 20
-      n_estimators: 
-        - 10
-        - 50
-        - 100
-        - 200
+  estimators:
+    random_forest:
+      cv: 5
+      verbose: 3
+      param_grid:
+        n_estimators: 
+          - 10
+          - 50
+          - 100
+          - 130 
+        criterion: 
+          - gini
+          - entropy
+        max_depth: 
+          - 2
+          - 4
+        max_features: 
+          - auto
+          - log2
+    xg_boost:
+      cv: 5
+      verbose: 3
+      param_grid:
+        learning_rate: 
+          - 0.5
+          - 0.1
+          - 0.01
+          - 0.001
+        max_depth: 
+          - 3
+          - 5
+          - 10
+          - 20
+        n_estimators: 
+          - 10
+          - 50
+          - 100
+          - 200
+    LR:
+      params:
+        penalty: l2
+        inv_regularize: 0.4
+        solver: lbfgs
+        max_iter: 300
 
-saved_models:
-  model_dir: models
+  artifact_dir: models
 
 reports:
-  params: report/params.json
-  scores: report/scores.json
+  params: reports/metrics/params.json
+  scores: reports/metrics/scores.json
