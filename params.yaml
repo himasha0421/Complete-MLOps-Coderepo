@@ -85,9 +85,9 @@ training:
     LR:
       params:
         penalty: l2
-        inv_regularize: 0.4
+        inv_regularize: 0.5
         solver: lbfgs
-        max_iter: 300
+        max_iter: 500
 
   artifact_dir: models
 

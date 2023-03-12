@@ -65,17 +65,17 @@ stages:
       size: 276
     params:
       params.yaml:
-        training.estimators.LR.params.inv_regularize: 0.4
-        training.estimators.LR.params.max_iter: 300
+        training.estimators.LR.params.inv_regularize: 0.5
+        training.estimators.LR.params.max_iter: 500
         training.estimators.LR.params.penalty: l2
         training.estimators.LR.params.solver: lbfgs
     outs:
     - path: models/model.joblib
-      md5: d41f2006afffcfa758c4e681c2a1572f
+      md5: fc4907ea19b4346fbcb17820f8e55f2f
       size: 16847
     - path: reports/metrics/params.json
-      md5: f367e6ef6e121569d439b518abe4252f
+      md5: 4d8e5f31edf39a969675588416ea80a7
       size: 81
     - path: reports/metrics/scores.json
-      md5: d02c097900089368dec4d1e3636e79f3
-      size: 143
+      md5: d16901e6e1a18ac4d1c86628a23a6b36
+      size: 145

@@ -57,3 +57,30 @@ Project Organization
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
 
 
+tox command -
+```bash
+tox
+```
+
+for rebuilding -
+```bash
+tox -r
+```
+
+pytest command
+```bash
+pytest -v
+```
+setup commands -
+```bash
+pip3 install -e .
+```
+build your own package commands -
+```bash
+python3 setup.py sdist bdist wheel
+```
+
+
+
+
+
