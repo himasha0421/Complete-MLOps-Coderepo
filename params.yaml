@@ -94,3 +94,5 @@ training:
 reports:
   params: reports/metrics/params.json
   scores: reports/metrics/scores.json
+
+webapp_model_dir: prediction_service/model/model.joblib
