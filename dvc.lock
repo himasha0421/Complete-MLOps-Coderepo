@@ -1,0 +1,81 @@
+schema: '2.0'
+stages:
+  train_load_data:
+    cmd: python3 src/pipeline_01_data_preperation.py --config=params.yaml --stage=train
+    deps:
+    - path: src/pipeline_01_data_preperation.py
+      md5: fedf9784a6065e7a42c9e270eb1b8e30
+      size: 2184
+    - path: src/utils.py
+      md5: 4d63a59f06e512acddc9c09dbf45449d
+      size: 276
+    outs:
+    - path: data/raw/collate-dataset/train_raw_wafer.csv
+      md5: 41113f3bf2fd134c1e7fbffe4731adab
+      size: 5618555
+  split_data:
+    cmd: python3 src/pipeline_03_data_split.py --config=params.yaml
+    deps:
+    - path: data/processed/preprocessed_data_train/train_preprocessed_wafer.csv
+      md5: 3d6df50cf1b31aca463d5d3cc49cadb1
+      size: 14519877
+    - path: src/pipeline_03_data_split.py
+      md5: 7c144d564949604b221fc21a3c8aaf1e
+      size: 1578
+    - path: src/utils.py
+      md5: 4d63a59f06e512acddc9c09dbf45449d
+      size: 276
+    outs:
+    - path: data/processed/preprocessed_data_train_split/preprocessed_dev_wafer.csv
+      md5: 6684c8fb54c1526b63eeaa1179e13900
+      size: 2850888
+    - path: data/processed/preprocessed_data_train_split/preprocessed_train_wafer.csv
+      md5: 202f4f0d8d030707bd4a410a5e4a9334
+      size: 11355679
+  train_preprocess:
+    cmd: python3 src/pipeline_02_data_preprocessing.py --config=params.yaml --stage=train
+    deps:
+    - path: data/raw/collate-dataset/train_raw_wafer.csv
+      md5: 41113f3bf2fd134c1e7fbffe4731adab
+      size: 5618555
+    - path: src/pipeline_02_data_preprocessing.py
+      md5: d1f89744d73f98359323a34a852998e5
+      size: 2825
+    - path: src/utils.py
+      md5: 4d63a59f06e512acddc9c09dbf45449d
+      size: 276
+    outs:
+    - path: data/processed/preprocessed_data_train/train_preprocessed_wafer.csv
+      md5: 3d6df50cf1b31aca463d5d3cc49cadb1
+      size: 14519877
+  train_and_evaluate:
+    cmd: python3 src/pipeline_04_model_train.py --config=params.yaml
+    deps:
+    - path: data/processed/preprocessed_data_train_split/preprocessed_dev_wafer.csv
+      md5: 6684c8fb54c1526b63eeaa1179e13900
+      size: 2850888
+    - path: data/processed/preprocessed_data_train_split/preprocessed_train_wafer.csv
+      md5: 202f4f0d8d030707bd4a410a5e4a9334
+      size: 11355679
+    - path: src/pipeline_04_model_train.py
+      md5: bea885949ea80dade2fd302f66c6464a
+      size: 3603
+    - path: src/utils.py
+      md5: 4d63a59f06e512acddc9c09dbf45449d
+      size: 276
+    params:
+      params.yaml:
+        training.estimators.LR.params.inv_regularize: 0.5
+        training.estimators.LR.params.max_iter: 500
+        training.estimators.LR.params.penalty: l2
+        training.estimators.LR.params.solver: lbfgs
+    outs:
+    - path: models/model.joblib
+      md5: fc4907ea19b4346fbcb17820f8e55f2f
+      size: 16847
+    - path: reports/metrics/params.json
+      md5: 4d8e5f31edf39a969675588416ea80a7
+      size: 81
+    - path: reports/metrics/scores.json
+      md5: d16901e6e1a18ac4d1c86628a23a6b36
+      size: 145

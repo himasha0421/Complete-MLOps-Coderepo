@@ -1,0 +1,47 @@
+stages:
+  train_load_data:
+    cmd: python3 src/pipeline_01_data_preperation.py --config=params.yaml --stage=train
+    deps:
+    - src/pipeline_01_data_preperation.py
+    - src/utils.py
+    outs:
+    - data/raw/collate-dataset/train_raw_wafer.csv
+
+  train_preprocess:
+    cmd: python3 src/pipeline_02_data_preprocessing.py --config=params.yaml --stage=train
+    deps:
+    - src/utils.py
+    - src/pipeline_02_data_preprocessing.py
+    - data/raw/collate-dataset/train_raw_wafer.csv
+    outs:
+    - data/processed/preprocessed_data_train/train_preprocessed_wafer.csv
+  
+  split_data:
+    cmd: python3 src/pipeline_03_data_split.py --config=params.yaml
+    deps:
+    - src/utils.py
+    - src/pipeline_03_data_split.py
+    - data/processed/preprocessed_data_train/train_preprocessed_wafer.csv
+    outs:
+    - data/processed/preprocessed_data_train_split/preprocessed_train_wafer.csv
+    - data/processed/preprocessed_data_train_split/preprocessed_dev_wafer.csv
+
+  train_and_evaluate:
+    cmd: python3 src/pipeline_04_model_train.py --config=params.yaml
+    deps:
+    - src/utils.py
+    - src/pipeline_04_model_train.py
+    - data/processed/preprocessed_data_train_split/preprocessed_train_wafer.csv
+    - data/processed/preprocessed_data_train_split/preprocessed_dev_wafer.csv
+    params:
+    - training.estimators.LR.params.penalty
+    - training.estimators.LR.params.inv_regularize
+    - training.estimators.LR.params.solver
+    - training.estimators.LR.params.max_iter
+    metrics:
+    - reports/metrics/scores.json:
+        cache: false
+    - reports/metrics/params.json:
+        cache: false
+    outs:
+    - models/model.joblib
