@@ -8,6 +8,7 @@ sklearn
 pandas
 pytest
 tox
+importlib-metadata==4.13.0
 flake8
 flask
 gunicorn
